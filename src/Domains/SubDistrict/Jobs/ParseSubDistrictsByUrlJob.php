@@ -80,7 +80,7 @@ class ParseSubDistrictsByUrlJob extends Job
 
     /**
      * @param string $url
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
     protected function parseSubDistrictInfo(string $url): array
     {

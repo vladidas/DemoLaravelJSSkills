@@ -5,7 +5,7 @@ import axios from 'axios';
 class Filter {
     /** Declare variables. */
     constructor() {
-        this.dropDownList = $('#dropdown-menu');
+        this.dropDownMenu = $('#dropdown-menu');
         this.searchUrl = '/sub-districts/search';
     }
 
@@ -20,7 +20,7 @@ class Filter {
         $('input[name=sub-district-name]').on('keyup', function () {
             const subDistrictName = this.value.trim();
 
-            _this.dropDownList.removeClass('show').empty();
+            _this.dropDownMenu.removeClass('show').empty();
             if (subDistrictName.length > 0) {
                 _this.filter(subDistrictName)
             }
@@ -43,12 +43,13 @@ class Filter {
 
     /** Build and show dropdown list. */
     showDropDownList(items) {
+        this.dropDownMenu.removeClass('show').empty();
         for (const item of items) {
-            this.dropDownList.append(
+            this.dropDownMenu.append(
                 `<a class="dropdown-item" href="${item.href}">${item.name}</a>`
             )
         }
-        this.dropDownList.addClass('show');
+        this.dropDownMenu.addClass('show');
     }
 }
 

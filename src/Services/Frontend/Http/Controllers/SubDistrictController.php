@@ -15,7 +15,7 @@ use App\Services\Frontend\Features\SubDistrict\SearchSubDistrictsFeature;
 class SubDistrictController extends Controller
 {
     /**
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class SubDistrictController extends Controller
 
     /**
      * @param $id
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -34,7 +34,7 @@ class SubDistrictController extends Controller
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search()
     {

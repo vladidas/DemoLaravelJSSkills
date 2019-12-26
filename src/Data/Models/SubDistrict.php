@@ -21,6 +21,8 @@ class SubDistrict extends Model implements HasMedia
     const MEDIA_IMAGE_DIALOG_THUMB_WIDTH = 150;
     const MEDIA_IMAGE_DIALOG_THUMB_HEIGHT = 150;
 
+    protected $appends = ['href'];
+
     /**
      * @var array
      */
@@ -148,6 +150,16 @@ class SubDistrict extends Model implements HasMedia
         }
 
         return $this->getLat() . ', ' . $this->getLng();
+    }
+
+    /**
+     * @return string
+     */
+    public function getHrefAttribute()
+    {
+        return route('frontend.sub-districts.show', [
+            'id' => $this->getId()
+        ]);
     }
 
     /**

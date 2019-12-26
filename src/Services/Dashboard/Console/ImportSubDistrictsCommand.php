@@ -28,7 +28,7 @@ class ImportSubDistrictsCommand extends LucidCommand
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {

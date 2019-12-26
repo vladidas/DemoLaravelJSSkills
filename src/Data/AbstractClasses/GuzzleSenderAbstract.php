@@ -3,7 +3,7 @@
 namespace App\Data\AbstractClasses;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Collection;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class GuzzleSenderAbstract
@@ -20,9 +20,9 @@ class GuzzleSenderAbstract
     /**
      * @param string $url
      * @param array $params
-     * @return $this
+     * @return GuzzleSenderAbstract
      */
-    public function send(string $url, array $params)
+    public function send(string $url, array $params): GuzzleSenderAbstract
     {
         $client = new Client();
         $this->response = $client->get($url, [
@@ -33,36 +33,34 @@ class GuzzleSenderAbstract
     }
 
     /**
-     * @return mixed
+     * @return Response
      */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->getResponse()->getStatusCode();
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function isSuccessStatus()
+    public function isSuccessStatus(): bool
     {
         return $this->getStatusCode() === 200;
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    public function getResultBody(): Collection
+    public function getResultBody()
     {
-        $result = json_decode($this->getResponse()->getBody(), true);
-
-        return collect($result);
+        return json_decode($this->getResponse()->getBody(), true);
     }
 }

@@ -61,22 +61,16 @@ class PaginateSubDistrictsJob extends Job
 
     /**
      * @param SubDistrictRepository $subDistrictRepository
-     * @return mixed
+     * @return array
      */
-    public function handle(SubDistrictRepository $subDistrictRepository)
+    public function handle(SubDistrictRepository $subDistrictRepository): array
     {
-        $items = $subDistrictRepository->getPaginatorWithQueryParams(
+        return $subDistrictRepository->getPaginatorWithQueryParams(
             $this->perPage,
             $this->attributes,
             $this->relations,
             $this->orderBy,
             $this->sorting
-        );
-
-        $items->map(function ($item) {
-           $item->href = route('frontend.sub-districts.show', ['id' => $item->getId()]);
-        });
-
-        return $items;
+        )->toArray();
     }
 }

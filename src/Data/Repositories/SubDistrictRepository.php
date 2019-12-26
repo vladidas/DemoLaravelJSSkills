@@ -21,37 +21,19 @@ class SubDistrictRepository extends Repository
     }
 
     /**
-     * Delete all rows.
-     *
-     * @return bool|null
-     * @throws \Exception
-     */
-    public function deleteAll()
-    {
-        return $this->model->query()->delete();
-    }
-
-    /**
-     * Add row.
-     *
-     * @param array $attributes
-     * @return mixed
-     */
-    public function create(array $attributes)
-    {
-        return $this->model->create($attributes);
-    }
-
-    /**
-     * @param $perPage
+     * @param int $perPage
      * @param array $params
      * @param array $relations
      * @param string $orderBy
      * @param string $sorting
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder[]|
+     * \Illuminate\Database\Eloquent\Collection|
+     * \Illuminate\Database\Eloquent\Model[]|
+     * \Illuminate\Database\Query\Builder[]|
+     * \Illuminate\Support\Collection
      */
     public function getPaginatorWithQueryParams(
-        $perPage,
+        int $perPage,
         array $params    = [],
         array $relations = [],
         string $orderBy  = 'created_at',

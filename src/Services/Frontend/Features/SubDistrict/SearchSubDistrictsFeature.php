@@ -16,7 +16,7 @@ class SearchSubDistrictsFeature extends Feature
 {
     /**
      * @param SearchSubDistrictsRequest $request
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(SearchSubDistrictsRequest $request)
     {

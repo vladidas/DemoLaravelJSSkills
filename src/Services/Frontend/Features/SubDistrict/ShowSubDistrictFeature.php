@@ -29,7 +29,7 @@ class ShowSubDistrictFeature extends Feature
 
     /**
      * @param SubDistrictRepository $subDistrictRepository
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function handle(SubDistrictRepository $subDistrictRepository)
     {

@@ -1,3 +1,5 @@
+$colorGrey: rgb(0, 0, 0, 0.5);
+
 /** Header. */
 .header {
     padding-top: 5px;
@@ -7,11 +9,7 @@ p, td, th, a {
     font-size: 1em;
 }
 
-.header .icon {
-    height: 50px;
-}
-
-.header .logo {
+.header .icon, .header .logo {
     height: 50px;
 }
 
@@ -31,9 +29,9 @@ p, td, th, a {
 
 .search-icon {
     position: absolute;
-    right: 30px;
+    right: 15px;
     top: 10px;
-    color: rgb(0, 0, 0, 0.5);
+    color: $colorGrey;
 }
 
 .has-search .form-control {
@@ -92,7 +90,7 @@ p, td, th, a {
 }
 
 .detail-block table td {
-    color: rgb(0, 0, 0, 0.5);
+    color: $colorGrey;
 }
 
 .name-detail {
@@ -112,13 +110,13 @@ p, td, th, a {
 
 .footer .text-uppercase {
     margin-top: 3em;
-    color: rgba(0, 0, 0, 0.5);
+    color: $colorGrey;
     font-size: 1em;
     font-weight: 700;
 }
 
 .footer .text-item {
-    color: rgba(0, 0, 0, 0.5);
+    color: $colorGrey;
     font-size: 1em;
 }
 

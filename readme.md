@@ -5,7 +5,7 @@
 - npm v6.12.1
 
 ### A few words about the platform:
-The project is written using Laravel microservices (Lucid Arch):
+The project is written using Laravel(Lucid Arch):
 ```
 https://github.com/lucid-architecture/laravel
 ```
@@ -71,9 +71,20 @@ Also, you can add locale to languages config.
 composer install
 ```
 
+> Copy and set .env file:
+```
+cp .env.example .env
+nano .env
+```
+
 > Generate APP_KEY:
 ```
 php artisan key:generate
+```
+
+> Install node_modules:
+```
+npm i
 ```
 
 > Compile assets:
@@ -86,17 +97,9 @@ npm run prod
 php artisan migrate
 ```
 
-> Add link to storage folder:
+> Generate link to storage folder:
 ```
 php artisan storage:link
-```
-
-> Set Redis driver Laravel Queue:
-```
-.env:
-CACHE_DRIVER=redis
-SESSION_DRIVER=redis
-QUEUE_CONNECTION=redis
 ```
 
 > Test redis server on the local machine:
@@ -106,11 +109,6 @@ redis-cli PING
 you can see response:
 ```
 PONG
-```
-
-> Generate link to storage folder:
-```
-php artisan storage:link
 ```
 
 > Start Laravel queue listener:

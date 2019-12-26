@@ -33,10 +33,10 @@ class GoogleApiService extends GuzzleSenderAbstract
 
     /**
      * @param string $address
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
-    public function getLatLngCoordinatesByAddress(string $address)
+    public function getLatLngCoordinatesByAddress(string $address): array
     {
         /** Send request to Google Api Service. */
         $url = $this->getGoogleApiUrl();
@@ -53,7 +53,7 @@ class GoogleApiService extends GuzzleSenderAbstract
         }
 
         /** Get result coordinates. */
-        $result = $response->getResultBody()->get('results');
+        $result = $response->getResultBody()['results'];
 
         if (!$result) {
             throw new \Exception('Empty result from Google Api.');

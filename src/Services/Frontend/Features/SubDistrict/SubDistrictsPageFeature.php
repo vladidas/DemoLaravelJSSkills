@@ -13,7 +13,7 @@ use App\Domains\Http\Jobs\RespondWithViewJob;
 class SubDistrictsPageFeature extends Feature
 {
     /**
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function handle()
     {

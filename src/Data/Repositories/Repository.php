@@ -28,16 +28,6 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Returns the first record in the database.
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function first()
-    {
-        return $this->model->first();
-    }
-
-    /**
      * Returns all the records.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -60,25 +50,51 @@ class Repository implements RepositoryInterface
     /**
      * Returns a range of records bounded by pagination parameters.
      *
-     * @param int limit
+     * @param int $limit
      * @param int $offset
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param array $relations
+     * @param string $orderBy
+     * @param string $sorting
+     * @return \Illuminate\Database\Eloquent\Builder[]|
+     * \Illuminate\Database\Eloquent\Collection|
+     * \Illuminate\Database\Eloquent\Model[]|
+     * \Illuminate\Database\Query\Builder[]|
+     * \Illuminate\Support\Collection|
      */
-    public function page($limit = 10, $offset = 0, array $relations = [], $orderBy = 'updated_at', $sorting = 'desc')
+    public function page(
+        int $limit = 10,
+        int $offset = 0,
+        array $relations = [],
+        string $orderBy = 'updated_at',
+        string $sorting = 'desc'
+    ) {
+        return $this->model
+            ->with($relations)
+            ->take($limit)
+            ->skip($offset)
+            ->orderBy($orderBy, $sorting)
+            ->get();
+    }
+
+    /**
+     * Add row.
+     *
+     * @param array $attributes
+     * @return mixed
+     */
+    public function create(array $attributes)
     {
-        return $this->model->with($relations)->take($limit)->skip($offset)->orderBy($orderBy, $sorting)->get();
+        return $this->model->create($attributes);
     }
 
     /**
      * Find a record by its identifier.
      *
-     * @param string $id
-     * @param array  $relations
-     *
+     * @param int $id
+     * @param array|null $relations
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function find($id, $relations = null)
+    public function find(int $id, array $relations = null)
     {
         return $this->findBy($this->model->getKeyName(), $id, $relations);
     }
@@ -89,11 +105,10 @@ class Repository implements RepositoryInterface
      *
      * @param string $attribute
      * @param string $value
-     * @param array  $relations
-     *
+     * @param array|null $relations
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function findBy($attribute, $value, $relations = null)
+    public function findBy(string $attribute, string $value, array $relations = null)
     {
         $query = $this->model->where($attribute, $value);
 
@@ -110,15 +125,15 @@ class Repository implements RepositoryInterface
      * Get all records by an associative array of attributes.
      * Two operators values are handled: AND | OR.
      *
-     * @param array  $attributes
+     * @param array $attributes
      * @param string $operator
-     * @param array  $relations
-     *
+     * @param string|null $relations
      * @return \Illuminate\Support\Collection
      */
-    public function getByAttributes(array $attributes, $operator = 'AND', $relations = null)
+    public function getByAttributes(array $attributes, string $operator = 'AND', string $relations = null)
     {
-        // In the following it doesn't matter wivh element to start with, in all cases all attributes will be appended to the
+        // In the following it doesn't matter wivh element to start with,
+        // in all cases all attributes will be appended to the
         // builder.
 
         // Get the last value of the associative array
@@ -157,10 +172,9 @@ class Repository implements RepositoryInterface
      * with $attributes.
      *
      * @param array $attributes
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function fill($attributes)
+    public function fill(array $attributes)
     {
         return $this->model->fill($attributes);
     }
@@ -170,10 +184,9 @@ class Repository implements RepositoryInterface
      * and saves it, pretty much like mass assignment.
      *
      * @param array $attributes
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function fillAndSave($attributes)
+    public function fillAndSave(array $attributes)
     {
         $this->model->fill($attributes);
         $this->model->save();
@@ -185,12 +198,11 @@ class Repository implements RepositoryInterface
      * Find record and fills out an instance of the model
      * and saves it, pretty much like mass assignment.
      *
-     * @param $key
-     * @param $attributes
-     *
+     * @param string $key
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update($key, $attributes)
+    public function update(string $key, array $attributes)
     {
         $this->model = $this->model->where($this->model->getKeyName(), $key)->firstOrFail();
         return $this->fillAndSave($attributes);
@@ -200,10 +212,9 @@ class Repository implements RepositoryInterface
      * Remove a selected record.
      *
      * @param string $key
-     *
      * @return bool
      */
-    public function remove($key)
+    public function remove(string $key)
     {
         return $this->model->where($this->model->getKeyName(), $key)->delete();
     }
@@ -214,11 +225,10 @@ class Repository implements RepositoryInterface
      * as follows: findByName or findByAlias.
      *
      * @param string $method
-     * @param array  $arguments
-     *
+     * @param array $arguments
      * @return mixed
      */
-    public function __call($method, $arguments)
+    public function __call(string $method, array $arguments)
     {
         /*
          * findBy convenience calling to be available

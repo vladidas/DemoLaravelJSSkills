@@ -10,13 +10,6 @@ namespace App\Data\Interfaces;
 interface RepositoryInterface
 {
     /**
-     * Returns the first record in the database.
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function first();
-
-    /**
      * Returns all the records.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -33,22 +26,36 @@ interface RepositoryInterface
     /**
      * Returns a range of records bounded by pagination parameters.
      *
-     * @param int limit
+     * @param int $limit
      * @param int $offset
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param array $relations
+     * @param string $orderBy
+     * @param string $sorting
+     * @return \Illuminate\Database\Eloquent\Builder[]|
+     * \Illuminate\Database\Eloquent\Collection|
+     * \Illuminate\Database\Eloquent\Model[]|
+     * \Illuminate\Database\Query\Builder[]|
+     * \Illuminate\Support\Collection|
+     * mixed
      */
-    public function page($limit = 10, $offset = 0, array $relations = [], $orderBy = 'updated_at', $sorting = 'desc');
+    public function page();
+
+    /**
+     * Add row.
+     *
+     * @param array $attributes
+     * @return mixed
+     */
+    public function create(array $attributes);
 
     /**
      * Find a record by its identifier.
      *
-     * @param string $id
-     * @param array  $relations
-     *
+     * @param int $id
+     * @param array|null $relations
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function find($id, $relations = null);
+    public function find(int $id, array $relations = null);
 
     /**
      * Find a record by an attribute.
@@ -56,61 +63,66 @@ interface RepositoryInterface
      *
      * @param string $attribute
      * @param string $value
-     * @param array  $relations
-     *
+     * @param array|null $relations
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function findBy($attribute, $value, $relations = null);
+    public function findBy(string $attribute, string $value, array $relations = null);
 
     /**
      * Get all records by an associative array of attributes.
      * Two operators values are handled: AND | OR.
      *
-     * @param array  $attributes
+     * @param array $attributes
      * @param string $operator
-     * @param array  $relations
-     *
+     * @param string|null $relations
      * @return \Illuminate\Support\Collection
      */
-    public function getByAttributes(array $attributes, $operator = 'AND', $relations = null);
+    public function getByAttributes(array $attributes, string $operator = 'AND', string $relations = null);
 
     /**
      * Fills out an instance of the model
      * with $attributes.
      *
      * @param array $attributes
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function fill($attributes);
+    public function fill(array $attributes);
 
     /**
      * Fills out an instance of the model
      * and saves it, pretty much like mass assignment.
      *
      * @param array $attributes
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function fillAndSave($attributes);
+    public function fillAndSave(array $attributes);
 
     /**
      * Find record and fills out an instance of the model
      * and saves it, pretty much like mass assignment.
      *
-     * @param $key
-     * @param $attributes
-     *
+     * @param string $key
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update($key, $attributes);
+    public function update(string $key, array $attributes);
 
     /**
      * Remove a selected record.
      *
      * @param string $key
-     *
      * @return bool
      */
-    public function remove($key);
+    public function remove(string $key);
+
+    /**
+     * Implement a convenience call to findBy
+     * which allows finding by an attribute name
+     * as follows: findByName or findByAlias.
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call(string $method, array $arguments);
 }

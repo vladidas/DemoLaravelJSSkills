@@ -2,6 +2,8 @@
 .editorconfig
 /.idea
 /vendor
+/public/assets
+/public/fonts
 /public/storage
 /node_modules
 Homestead.yaml
